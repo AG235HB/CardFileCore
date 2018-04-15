@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "ViewavailibleBooks";
+}
+
+<h2>ViewavAilibleBooks</h2>
+
+@if (ViewBag.AvailibleBooks != null)
+{
+    <p>Доступные книги:</p>
+    <table>
+        @foreach (var book in ViewBag.AvailibleBooks)
+        {
+            <tr>
+                <td>@book.Name</td>
+                <td>@book.Number</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>Книг нет</p>
+}

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "ViewGivenBooks";
+}
+
+<h2>ViewGivenBooks</h2>
+
+@if (ViewBag.GivenBooks != null)
+{
+    <p>Доступные книги</p>
+    <ul>
+        @foreach (var book in ViewBag.GivenBooks)
+        {
+            @if (book.Validity <= System.DateTime.Now)
+            {
+                <li>У @book.UserName просрочен возврат книги @book.BookName</li>
+            }
+            else
+            {
+                <li>Книга @book.BookName выдана @book.UserName до @book.Validity</li>
+            }
+        }
+    </ul>
+}
+else
+{
+    <p>Все книги в библиотеке</p>
+}

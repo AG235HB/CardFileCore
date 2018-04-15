@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "QueryConfirm";
+}
+
+<h2>QueryConfirm</h2>
+
+@if (ViewBag.RequestedBooks != null)
+{
+    <p>Следующие страждущие жаждут книг:</p>
+    <form method="post">
+        <select multiple name="user_id">
+            @foreach (var b in ViewBag.RequestedBooks)
+            {
+                <option value="@b.Id">@b.UserName просит @b.BookName</option>
+            }
+        </select>
+        <input type="submit" value="Одобрить" />
+    </form>
+    <a asp-action="Clear" asp-controller="Admin">Послать всех</a>
+}
+else
+{
+    <p>Никто не хочет читать.</p>
+}

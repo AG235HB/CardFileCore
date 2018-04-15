@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Main user page</h2>
+
+@if (ViewBag.GivenBooks == null)
+{
+    <p>Нет книг, требующих возврата.</p>
+}
+else
+{ 
+    <p>Взятые книги:</p>
+    <table>
+        @foreach(var gb in ViewBag.GivenBooks)
+        {
+            <tr>
+                <td>@gb.BookName</td>
+                <td>@gb.Validity</td>
+                <td>
+                    <a href="/User/ReturnBook/@gb.Id">Вернуть</a>
+                </td>
+                @if (gb.Validity <= System.DateTime.Now.Date)
+                {
+                    <td>Срочно вернуть</td>
+                }
+            </tr>
+        }
+    </table>
+}
