@@ -1,7 +1,21 @@
-﻿
-@{
-    ViewData["Title"] = "AddBook";
-}
+﻿@model CardFileCore.ViewModels.AddBookViewModel
 
 <h2>AddBook</h2>
 
+<form method="post" asp-controller="Admin" asp-action="AddBook">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        <label asp-for="Name"></label><br />
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label asp-for="Number"></label><br />
+        <input asp-for="Number" />
+        <span asp-validation-for="Number"></span>
+    </div>
+    
+    <div>
+        <input type="submit" value="Добавить" />
+    </div>
+</form>

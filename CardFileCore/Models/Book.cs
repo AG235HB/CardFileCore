@@ -9,7 +9,7 @@ namespace CardFileCore.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Number { get; set; }
+        public int Number { get; set; }
         public bool Availible { get; set; }
     }
 }

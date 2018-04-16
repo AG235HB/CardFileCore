@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CardFileCore.Models;
+using CardFileCore.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,7 +32,7 @@ namespace CardFileCore.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> QueryConfirm(List<int> user_id)
+        public IActionResult QueryConfirm(List<int> user_id)
         {
             foreach(var id in user_id)
             {
@@ -41,7 +42,7 @@ namespace CardFileCore.Controllers
 
                 var newRecord = record.ToList();
 
-                db.GivenBooks.Add(new GivenBook { BookName = newRecord[0].BookName, UserName = newRecord[0].UserName, Validity = newRecord[0].Validity });
+                db.GivenBooks.Add(new GivenBook { BookName = newRecord[0].BookName, BookNumber = newRecord[0].BookNumber, UserName = newRecord[0].UserName, Validity = newRecord[0].Validity });
                 db.BookQueries.Remove(newRecord[0]);
 
                 var givenBook = from book in db.Books
@@ -85,6 +86,40 @@ namespace CardFileCore.Controllers
                 ViewBag.GivenBooks = db.GivenBooks;
 
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult AddBook()
+        {
+            return View(new AddBookViewModel { });
+        }
+
+        [HttpGet]
+        public IActionResult AddBookError()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddBook(AddBookViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var number = from book in db.Books
+                             where book.Number == model.Number
+                             select book.Number;
+
+                if (number.Count() == 0)
+                {
+                    db.Books.Add(new Book { Name = model.Name, Number = model.Number, Availible = true });
+                    db.SaveChanges();
+                }
+                else
+                    return RedirectToAction("AddBookError", "Admin");
+            }
+
+            return RedirectToAction("Index","Admin");
         }
     }
 }

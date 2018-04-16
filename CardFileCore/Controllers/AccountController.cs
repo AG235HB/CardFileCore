@@ -45,11 +45,11 @@ namespace CardFileCore.Controllers
                 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
-                //var allRoles = _roleManager.Roles.ToList();
-                await _userManager.AddToRoleAsync(user, "user");
-
                 if (result.Succeeded)
                 {
+                    //var allRoles = _roleManager.Roles.ToList();
+                    await _userManager.AddToRoleAsync(user, "user");
+
                     await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
                 }
