@@ -48,7 +48,7 @@ namespace CardFileCore.Controllers
         }
 
         [HttpPost]
-        public IActionResult BookQuery(/*BookQuery bookQuery, */List<int> book_id)
+        public IActionResult BookQuery(/*BookQuery bookQuery, */List<int> book_id, string requestedDate)
         {
             //BookQuery bookQuery
 
@@ -60,7 +60,7 @@ namespace CardFileCore.Controllers
 
                 var newBook = Book.ToList();
 
-                db.BookQueries.Add(new BookQuery { BookName = newBook[0].Name, BookNumber = newBook[0].Number, UserName = User.Identity.Name, Validity = DateTime.Now.AddDays(30) });
+                db.BookQueries.Add(new BookQuery { BookName = newBook[0].Name, BookNumber = newBook[0].Number, UserName = User.Identity.Name, Validity = DateTime.Parse(requestedDate) });
 
                 //этим занимается админ
                 //newBook[0].Availible = false;
