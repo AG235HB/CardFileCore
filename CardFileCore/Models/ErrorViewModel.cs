@@ -1,5 +1,3 @@
-using System;
-
 namespace CardFileCore.Models
 {
     public class ErrorViewModel

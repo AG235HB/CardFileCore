@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CardFileCore.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace CardFileCore.Controllers
 {
@@ -20,8 +16,13 @@ namespace CardFileCore.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Book> books = db.Books;
-            ViewBag.Books = books;
+            //IEnumerable<Book> books = db.Books;
+            //ViewBag.Books = books;
+
+            if (User.IsInRole("admin"))
+                return RedirectToAction("Index", "Admin");
+            else if (User.IsInRole("user"))
+                return RedirectToAction("Index", "User");
 
             return View();
         }

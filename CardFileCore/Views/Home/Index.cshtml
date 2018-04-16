@@ -2,6 +2,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+<p>Добро пожаловать! Залогиньтесь для дальнейшей работы.</p>
+
 @*@if (User.Identity.IsAuthenticated)
 {
     <p>@User.Identity.Name</p>
@@ -16,7 +18,7 @@ else
     <a asp-controller="Account" asp-action="Register">Регистрация</a>
 }*@
 
-<table>
+@*<table>
     @foreach (var b in ViewBag.Books)
     {
         <tr>
@@ -33,7 +35,7 @@ else
         </tr>
 
     }
-</table>
+</table>*@
 
 @*<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
         <ol class="carousel-indicators">

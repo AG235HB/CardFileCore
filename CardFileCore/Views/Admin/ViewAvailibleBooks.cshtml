@@ -8,12 +8,18 @@
 @if (ViewBag.AvailibleBooks != null)
 {
     <p>Доступные книги:</p>
-    <table>
+    <table border="1">
+        <tr>
+            <td>Название книги</td>
+            <td>Инвентарный номер</td>
+        </tr>
         @foreach (var book in ViewBag.AvailibleBooks)
         {
             <tr>
                 <td>@book.Name</td>
                 <td>@book.Number</td>
+                <td><a href="/Admin/EditBook/@book.Id">Изменить</a></td>
+                <td><a href="/Admin/DeleteBook/@book.Id">Удалить</a></td>
             </tr>
         }
     </table>

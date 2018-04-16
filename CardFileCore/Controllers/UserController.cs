@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CardFileCore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -51,6 +50,8 @@ namespace CardFileCore.Controllers
         public IActionResult BookQuery(/*BookQuery bookQuery, */List<int> book_id, string requestedDate)
         {
             //BookQuery bookQuery
+            if (requestedDate == null)
+                return RedirectToAction("RequestError", "User");
 
             foreach (var id in book_id)
             {
@@ -68,6 +69,12 @@ namespace CardFileCore.Controllers
             }
 
             return RedirectToAction("Index", "User");
+        }
+
+        [HttpGet]
+        public IActionResult RequestError()
+        {
+            return View();
         }
 
         [HttpGet]

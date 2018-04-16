@@ -5,3 +5,11 @@
 
 <h2>EditBook</h2>
 
+<form method="post" asp-controller="Admin" asp-action="EditBook">
+    <input type="hidden" name="id" value="@ViewBag.Book.Id"/>
+    <label>Новое название:</label>
+    <input type="text" name="newName" value="@ViewBag.Book.Name"/>
+    <label>Новый номер:</label>
+    <input type="text" name="newNumber" value="@ViewBag.Book.Number"/>
+    <input type="submit" value="Применить" />
+</form>

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CardFileCore.Models;
 using CardFileCore.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -120,6 +118,59 @@ namespace CardFileCore.Controllers
             }
 
             return RedirectToAction("Index","Admin");
+        }
+
+        [HttpGet]
+        public IActionResult EditBook(int id)
+        {
+            var editableBook = from book in db.Books
+                               where book.Id == id
+                               select book;
+            ViewBag.Book = editableBook.ToList()[0];
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult EditBook(int id, string newName, string newNumber)
+        {
+            var editableBook = from book in db.Books
+                               where book.Id == id
+                               select book;
+            var tmp = editableBook.ToList()[0];
+
+            var number = from book in db.Books
+                         where book.Id != id && book.Number == int.Parse(newNumber)
+                         select book;
+
+            if(number.Count()==0)
+            {
+                tmp.Name = newName;
+                tmp.Number = int.Parse(newNumber);
+                db.SaveChanges();
+            }
+            
+            return RedirectToAction("ViewAvailibleBooks", "Admin");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteBook(int id)
+        {
+            var deletedBook = from book in db.Books
+                              where book.Id == id
+                              select book;
+            db.Books.Remove(deletedBook.ToList()[0]);
+
+            var deletedRequestedBook = from book in db.BookQueries
+                                       where book.BookNumber == deletedBook.ToList()[0].Number
+                                       select book;
+
+            if(deletedRequestedBook.Count()>0)
+                db.BookQueries.Remove(deletedRequestedBook.ToList()[0]);
+
+            db.SaveChanges();
+
+            return RedirectToAction("ViewAvailibleBooks", "Admin");
         }
     }
 }
