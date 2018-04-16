@@ -5,6 +5,8 @@
 
 <h2>Main user page</h2>
 
+<a asp-controller="User" asp-action="BookQuery">Запросить книгу</a>
+
 @if (ViewBag.GivenBooks == null)
 {
     <p>Нет книг, требующих возврата.</p>

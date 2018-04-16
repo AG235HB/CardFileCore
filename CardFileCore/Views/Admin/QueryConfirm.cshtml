@@ -7,7 +7,7 @@
 
 @if (ViewBag.RequestedBooks != null)
 {
-    <p>Следующие страждущие жаждут книг:</p>
+    <p>Следующие читатели жаждут книг:</p>
     <form method="post">
         <select multiple name="user_id">
             @foreach (var b in ViewBag.RequestedBooks)
@@ -17,7 +17,7 @@
         </select>
         <input type="submit" value="Одобрить" />
     </form>
-    <a asp-action="Clear" asp-controller="Admin">Послать всех</a>
+    <a asp-action="Clear" asp-controller="Admin">Очистить список запросов</a>
 }
 else
 {
